@@ -1,0 +1,177 @@
+/* navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.navbartext1 {
+  padding-left: 500px;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.NavText {
+  padding-left: 60px;
+  font-style: oblique;
+  font-size: 25px;
+}
+
+/* card-eligible */
+.bloodpng1 {
+  height: 75px;
+  margin-top: 17px;
+  margin-bottom: 30px;
+}
+
+.cardcolor:hover {
+  box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.50);
+}
+
+.register-log {
+  text-align: center;
+}
+
+/* Register */
+.filter {
+  margin-top: 100px;
+  padding-top: 15px;
+  text-align: center;
+  margin-left: 10%;
+  width: 80%;
+}
+
+/* .cardcolor{
+  display: none;
+  opacity: 0.0;
+  position: relative;
+  margin-left: -120px;
+    width: 100%;
+} */
+.spanColor {
+  color: #961e1b;
+}
+
+.List-Style {
+  list-style-type: circle;
+  line-height: 2;
+}
+
+.row {
+  padding-top: 20px;
+  padding-left: 20px;
+}
+
+/* signUp section */
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.top {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.fname {
+  margin-top: 0;
+}
+
+.lname {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.container {
+  padding: 16px;
+}
+
+/* SocialButton */
+.social-btn .btn {
+  margin: 10px 0;
+  font-size: 15px;
+  text-align: left;
+  line-height: 24px;
+}
+
+.social-btn .btn i {
+  float: left;
+  margin: 4px 15px 0 5px;
+  min-width: 15px;
+}
+
+.fa {
+  font-size: 18px;
+}
+
+.my-small-btn {
+  width: 70%;
+  /* padding-left: :0px; */
+  margin-left: 80px;
+}
+
+/* new things */
+.MarginTop {
+  margin-top: 100px;
+  /* margin-right: 60px; */
+}
+
+.BackgroundColorSky {
+  background-color: rgb(230, 249, 255);
+}
+
+.registerhome {
+  margin-top: 70px;
+  background-color: grey;
+}
+
+.footerhome1 {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  padding: 37px 0px 36px 0px;
+  text-align: center;
+  background: #092944;
+  color: #a5abb2;
+}
+
+.footerhome1 a {
+  position: relative;
+  font-weight: 700;
+  color: #a5abb2;
+}
+
+.footerhome1 a:hover {
+  color: #df5626;
+}
+
+.registerpara {
+  text-align: center;
+  font-size: 16px;
+  margin: 0
+}
+
+.logbut {
+  padding: 30px;
+  display: block;
+  text-align: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin-top: 80px;
+}
