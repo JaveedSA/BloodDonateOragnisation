@@ -42,17 +42,3 @@ document.querySelector('.div2').addEventListener('click', function(e) {
 document.querySelector('.div3').addEventListener('click', function(e) {
   window.location.href = '/benifits';
 }, false);
-
-
-
-// ......................start.................
-$(window).scroll(function() {
-    if ($(this).scrollTop()>10)
-     {
-        $('.div1').hide(1000);
-     }
-    else
-     {
-      $('.div1').show(1000);
-     }
- });
