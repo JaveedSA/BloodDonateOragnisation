@@ -269,12 +269,11 @@ app.get("/bloodtypes",function(req,res){
   res.render("bloodtypes");
 });
 
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
-app.listen(port);
-
 app.listen(port,function(){
   console.log("This port is started Successful");
 })
