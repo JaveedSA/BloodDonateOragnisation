@@ -10,6 +10,8 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+const cool = require('cool-ascii-faces');
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -40,7 +42,7 @@ mongoose.connect("mongodb+srv://admin-javeed:javeed12@cluster0.rpiyd.mongodb.net
 mongoose.set("useCreateIndex", true);
 
 
-const userSchema = new mongoose.Schema ({
+const userSchema = new mongoose.Schema({
   email: String,
   username: String,
   password: String,
@@ -96,7 +98,10 @@ passport.use(new GoogleStrategy({
   function(accessToken, refreshToken, profile, cb) {
 
 
-    User.findOrCreate({ username: profile.emails[0].value, googleId: profile.id }, function (err, user) {
+    User.findOrCreate({
+      username: profile.emails[0].value,
+      googleId: profile.id
+    }, function(err, user) {
       return cb(err, user);
     });
   }
@@ -108,26 +113,32 @@ passport.use(new FacebookStrategy({
     callbackURL: "https://localhost:3000/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    User.findOrCreate({
+      facebookId: profile.id
+    }, function(err, user) {
       return cb(err, user);
     });
   }
 ));
 
-app.get("/",function(req,res){
+app.get("/", function(req, res) {
   res.render("home");
 });
 
-app.get("/success",function(req,res){
+app.get("/success", function(req, res) {
   res.render("success");
 });
 
 app.get("/auth/google",
-  passport.authenticate('google', { scope: ["profile","email"] })
+  passport.authenticate('google', {
+    scope: ["profile", "email"]
+  })
 );
 
 app.get("/auth/google/secrets",
-  passport.authenticate('google', { failureRedirect: "/login" }),
+  passport.authenticate('google', {
+    failureRedirect: "/login"
+  }),
   function(req, res) {
     // Successful authentication, redirect to secrets.
     res.redirect("/secrets");
@@ -138,29 +149,33 @@ app.get('/auth/facebook',
   passport.authenticate('facebook'));
 
 app.get('/auth/facebook/secrets',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', {
+    failureRedirect: '/login'
+  }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/secrets1');
   });
 
-  app.get("/login", function(req, res){
-    res.render("login");
-  });
+app.get("/login", function(req, res) {
+  res.render("login");
+});
 
 
-app.get("/register", function(req,res){
+app.get("/register", function(req, res) {
   res.render("register");
 });
 
-app.post("/register", function(req, res){
+app.post("/register", function(req, res) {
 
-  User.register({username: req.body.username}, req.body.password, function(err, user){
+  User.register({
+    username: req.body.username
+  }, req.body.password, function(err, user) {
     if (err) {
       console.log(err);
       res.redirect("/register");
     } else {
-      passport.authenticate("local")(req, res, function(){
+      passport.authenticate("local")(req, res, function() {
         res.redirect("/secrets");
       });
     }
@@ -168,7 +183,7 @@ app.post("/register", function(req, res){
 
 });
 
-app.post("/success",function(req,res){
+app.post("/success", function(req, res) {
   const fname = req.body.name1;
   const lname = req.body.name2;
   const num = req.body.number11;
@@ -177,104 +192,116 @@ app.post("/success",function(req,res){
   const district1 = req.body.district;
   const blood = req.body.blood1;
 
-const formreg= new User({
-  form1:{
-  firstname: fname,
-  lastname: lname,
-  numbers: num,
-  countryname: country,
-  statename: state1,
-  districtname: district1,
-  bloodgr: blood
-},
-});
-formreg.save();
-res.render("secrets");
+  const formreg = new User({
+    form1: {
+      firstname: fname,
+      lastname: lname,
+      numbers: num,
+      countryname: country,
+      statename: state1,
+      districtname: district1,
+      bloodgr: blood
+    },
+  });
+  formreg.save();
+  res.render("secrets");
 
 });
 
 
-app.get("/secrets",function(req,res){
-  User.find({"secret": {$ne: null}}, function(err, foundUsers){
-    if (err){
+app.get("/secrets", function(req, res) {
+  User.find({
+    "secret": {
+      $ne: null
+    }
+  }, function(err, foundUsers) {
+    if (err) {
       console.log(err);
     } else {
       if (foundUsers) {
-        res.render("secrets", {usersWithSecrets: foundUsers});
+        res.render("secrets", {
+          usersWithSecrets: foundUsers
+        });
       }
     }
   });
 });
 
-app.get('/logout', function (req, res){
+app.get('/logout', function(req, res) {
   // req.logout();
   // res.redirect("/");
-  req.session.destroy(function (err) {
+  req.session.destroy(function(err) {
     res.clearCookie('connect.sid');
     res.redirect('/'); //Inside a callback… bulletproof!
   });
 });
 
-app.get("/search",function(req,res){
+app.get("/search", function(req, res) {
   res.render("search")
 });
-app.post("/search", function(req,res){
-  const countryname1= req.body.state;
-  const statename1= req.body.countrya;
+app.post("/search", function(req, res) {
+  const countryname1 = req.body.state;
+  const statename1 = req.body.countrya;
   const districtname1 = req.body.district;
   const bloodname1 = req.body.blood1;
 
-  User.find({"form1.statename": statename1,"form1.districtname": districtname1,"form1.bloodgr":bloodname1},function(err,user){
+  User.find({
+    "form1.statename": statename1,
+    "form1.districtname": districtname1,
+    "form1.bloodgr": bloodname1
+  }, function(err, user) {
 
-    res.render("success",{posts:user});
+    res.render("success", {
+      posts: user
+    });
   });
 });
 
 
-app.post("/", function(req, res){
+app.post("/", function(req, res) {
 
 });
 
-app.post("/login", function(req, res){
+app.post("/login", function(req, res) {
 
   const user = new User({
     username: req.body.username,
     password: req.body.password
   });
 
-  req.login(user, function(err){
+  req.login(user, function(err) {
     if (err) {
       console.log(err);
     } else {
-      passport.authenticate("local")(req, res, function(){
+      passport.authenticate("local")(req, res, function() {
         res.redirect("/secrets");
       });
     }
   });
 
 });
-app.get("/demo",function(req,res){
+app.get("/demo", function(req, res) {
   res.render("demo");
 });
 
-app.get("/benifits",function(req,res){
+app.get("/benifits", function(req, res) {
   res.render("benifits");
 });
 
-app.get("/eligible",function(req,res){
+app.get("/eligible", function(req, res) {
   res.render("eligible");
 });
 
-app.get("/bloodtypes",function(req,res){
+app.get("/bloodtypes", function(req, res) {
   res.render("bloodtypes");
 });
 
+app.get('/cool', function(req, res) {
+  res.send(cool());
+});
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
+// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-app.listen(port,function(){
-  console.log("This port is started Successful");
+app.listen(PORT,function(){
+  console.log(`Listening on ${ PORT }`);
 });
