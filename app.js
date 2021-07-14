@@ -269,6 +269,12 @@ app.get("/bloodtypes",function(req,res){
   res.render("bloodtypes");
 });
 
-app.listen(3000,function(){
-  console.log("This port is connected in 3000 channel");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
+
+app.listen(port,function(){
+  console.log("This port is started Successful");
 })
