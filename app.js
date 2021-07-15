@@ -121,7 +121,7 @@ passport.use(new FacebookStrategy({
   }
 ));
 
-app.get("/", function(req, res) {
+app.get("blood-donate-organisation.herokuapp.com", function(req, res) {
   res.render("home");
 });
 
