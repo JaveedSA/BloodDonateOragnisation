@@ -17,12 +17,13 @@ const app = express();
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
+app.set("port", PORT);
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 app.use(session({
-  secret: "this is a scret of mine",
+  secret: "this is a secret of mine",
   resave: false,
   saveUninitialized: false
 }));
@@ -72,10 +73,6 @@ userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
-// users.createIndex({
-//   unique: true,
-//   sparse: true,
-//   background: true});
 
 passport.use(User.createStrategy());
 
@@ -92,7 +89,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "https://blood-donate-organization.herokuapp.com/auth/google/secrets",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -110,7 +107,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.CLIENT_ID_FB,
     clientSecret: process.env.CLIENT_SECRET_FB,
-    callbackURL: "https://localhost:3000/auth/facebook/secrets"
+    callbackURL: "https://blood-donate-organization.herokuapp.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({
@@ -154,7 +151,7 @@ app.get('/auth/facebook/secrets',
   }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/secrets1');
+    res.redirect('/secrets');
   });
 
 app.get("/login", function(req, res) {
@@ -296,11 +293,10 @@ app.get("/bloodtypes", function(req, res) {
   res.render("bloodtypes");
 });
 
+// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 app.get('/cool', function(req, res) {
   res.send(cool());
 });
-
-// app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 app.listen(PORT,function(){
   console.log(`Listening on ${ PORT }`);
